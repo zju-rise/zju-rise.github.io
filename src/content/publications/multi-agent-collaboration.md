@@ -14,5 +14,3 @@ summary: "Understanding trust boundaries between agents."
 directions: ["agent-security"]
 members: ["alex-chen", "siyuan-lin", "yuchen-zhao", "yutong-chen", "zihan-liu"]
 ---
-
-

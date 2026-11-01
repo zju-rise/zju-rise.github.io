@@ -14,5 +14,3 @@ summary: "Analyzing delegated tasks and shared agent memory."
 directions: ["agent-security"]
 members: ["alex-chen", "xinyi-wang", "haoran-zhou", "mengyao-xu", "yiming-li"]
 ---
-
-

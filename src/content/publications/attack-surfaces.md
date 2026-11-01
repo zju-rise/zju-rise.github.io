@@ -14,5 +14,3 @@ summary: "Threat models, evaluation, and practical defenses."
 directions: ["agent-security"]
 members: ["alex-chen", "jiaqi-wu", "yiming-li", "rui-zhang", "yutong-chen"]
 ---
-
-

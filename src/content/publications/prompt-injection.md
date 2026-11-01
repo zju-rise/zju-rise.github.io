@@ -14,5 +14,3 @@ summary: "A benchmark for attacks through untrusted content."
 directions: ["agent-security"]
 members: ["alex-chen", "xinyi-wang", "haoran-zhou", "mengyao-xu", "yiming-li"]
 ---
-
-

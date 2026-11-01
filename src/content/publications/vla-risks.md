@@ -14,5 +14,3 @@ summary: "Examining the effects of manipulated observations on action."
 directions: ["embodied-ai-security"]
 members: ["alex-chen", "yiming-li", "rui-zhang", "xinyi-wang", "haoran-zhou"]
 ---
-
-

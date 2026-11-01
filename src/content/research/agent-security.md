@@ -10,5 +10,3 @@ topics: ["Prompt injection and untrusted instructions: identifying how external 
 pipeline: "Instructions → Reasoning → Tools"
 perspective: "We evaluate the complete workflow, from retrieved content to external actions. Our goal is to understand where trust is assumed, where it breaks, and which safeguards remain effective in realistic tasks."
 ---
-
-

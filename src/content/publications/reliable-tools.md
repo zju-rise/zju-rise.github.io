@@ -14,5 +14,3 @@ summary: "Studying practical permissions in autonomous workflows."
 directions: ["agent-security"]
 members: ["alex-chen", "haoran-zhou", "xinyi-wang", "wenhao-sun", "jiaqi-wu"]
 ---
-
-

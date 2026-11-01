@@ -14,5 +14,3 @@ summary: "Connecting perception failures to physical actions."
 directions: ["embodied-ai-security"]
 members: ["alex-chen", "haoran-zhou", "xinyi-wang", "wenhao-sun", "jiaqi-wu"]
 ---
-
-

@@ -14,5 +14,3 @@ summary: "A framework for evaluation across changing physical environments."
 directions: ["embodied-ai-security"]
 members: ["alex-chen", "yutong-chen", "zihan-liu", "wenhao-sun", "rui-zhang"]
 ---
-
-

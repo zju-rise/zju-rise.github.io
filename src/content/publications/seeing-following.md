@@ -14,5 +14,3 @@ summary: "Understanding attacks on visual grounding and action planning."
 directions: ["embodied-ai-security"]
 members: ["alex-chen", "siyuan-lin", "yuchen-zhao", "yutong-chen", "zihan-liu"]
 ---
-
-

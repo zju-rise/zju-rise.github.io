@@ -10,5 +10,3 @@ topics: ["Adversarial perception and planning: understanding how misleading visu
 pipeline: "Perception → Planning → Action"
 perspective: "We connect model-level weaknesses to system-level consequences. Evaluations consider the agent’s observations, planned actions, interactions with objects, and ability to recover when conditions change."
 ---
-
-
