@@ -18,7 +18,19 @@ const groups = Object.entries(groupLabels) as [keyof typeof groupLabels, string]
     const members = people.filter((person) => person.data.group === group);
     return members.length > 0 && <section class="people-section" aria-labelledby={`group-${group}`}>
       <SectionBar title={label} id={`group-${group}`} />
-      {group === 'faculty' ? members.map((person) => <div class="faculty-overview"><MemberCard person={person} large /><div class="faculty-summary"><h3>{person.data.placeholder ? 'TBD' : 'Security for intelligent systems in the real world'}</h3><p>{editorial.facultyOverview}</p><p>Research interests<br />{person.data.interests}</p><p>{editorial.facultyWelcome}</p></div></div>) : <div class="member-grid">{members.map((person) => <MemberCard person={person} />)}</div>}
+      {group === 'faculty' ? members.map((person) => (
+        <div class="faculty-overview">
+          <MemberCard person={person} large />
+          <div class="faculty-summary">
+            <h3>{person.data.name}</h3>
+            {/* Keep each faculty member's overview in their own Markdown record. */}
+            {person.data.facultySummary.length > 0
+              ? person.data.facultySummary.map((paragraph) => <p>{paragraph}</p>)
+              : <p>{editorial.facultyOverview}</p>}
+            <p><strong>Research directions</strong><br />{person.data.interests}</p>
+          </div>
+        </div>
+      )) : <div class="member-grid">{members.map((person) => <MemberCard person={person} />)}</div>}
     </section>;
   })}
   {!people.length && <p class="empty-message">Meet the group here as member profiles are added.</p>}

@@ -6,6 +6,7 @@
 import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
+import { optionalEmail, optionalWebsite } from './lib/optional-fields';
 
 const metadata = {
   purpose: z.string().min(1),
@@ -16,11 +17,6 @@ const metadata = {
 };
 // Local asset paths and HTTPS links are accepted; javascript: URLs are rejected.
 const link = z.string().refine((value) => /^https:\/\//.test(value) || /^\/(?!\/)/.test(value), 'Use an HTTPS URL or a root-relative path.');
-// An omitted, blank or empty YAML field means no personal homepage link.
-const personalWebsite = z.preprocess(
-  (value) => typeof value === 'string' ? value.trim() || undefined : value == null ? undefined : value,
-  z.url({ protocol: /^https?$/, error: 'website must be a full http:// or https:// URL.' }).optional(),
-);
 
 const news = defineCollection({
   loader: glob({ pattern: '*.md', base: './src/content/news' }),
@@ -49,9 +45,10 @@ const people = defineCollection({
     order: z.number().default(0), role: z.string().min(1),
     interests: z.string().min(1), affiliation: z.string().min(1),
     photo: z.string().regex(/^\/(?!\/)/).optional(),
-    email: z.email().optional(), website: personalWebsite, scholar: link.optional(), cv: link.optional(),
+    email: optionalEmail, website: optionalWebsite, scholar: link.optional(), cv: link.optional(),
     joined: z.number().int().optional(),
     // Faculty-only prose remains editable in the person's record, not the template.
+    facultySummary: z.array(z.string().min(1)).default([]),
     researchNotes: z.array(z.object({ title: z.string(), text: z.string(), direction: z.enum(['agent-security', 'embodied-ai-security']) })).default([]),
     activities: z.array(z.object({ title: z.string(), text: z.string() })).default([]),
   }),

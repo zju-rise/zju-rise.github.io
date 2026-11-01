@@ -108,7 +108,7 @@ TBD
 | `interests` | 研究兴趣 | 简短英文，如 `Agent Security` |
 | `affiliation` | 所属学校或毕业去向 | 在读可填 `Zhejiang University` |
 | `photo` | 照片地址 | 对照第 2 节的路径规则；没有就删这一行 |
-| `email` | 联系邮箱 | 没有或不想公开就删这一行 |
+| `email` | 联系邮箱 | 没有或不想公开时，可留空 `email: ""`，也可删除这一行 |
 
 成员分组只接受以下代码，不能直接写中文：
 
@@ -131,6 +131,15 @@ website: "https://你的个人主页域名/"
 没有个人主页时，省略这一行，或写 `website: ""`，页面就不会跳转。不要填写 `TBD` 或 `#`。站内自动生成的个人资料页面仍保留，但 People 页不会再链接过去。
 
 `scholar`、`cv` 也是可选字段，没有真实链接就省略。
+
+邮箱和个人主页均可留空，例如：
+
+```yaml
+email: ""
+website: ""
+```
+
+留空表示不显示对应联系链接。若填写了内容，邮箱必须是 `name@域名` 这样的有效地址，个人主页必须是完整的 http/https URL；不能填 `TBD`。其他可选字段没有值时，按指南省略该行。
 
 ### 第四步：在本地看效果
 
@@ -323,7 +332,8 @@ project: "https://实际项目页"
 - 新增真实新闻/论文后，对应栏目的占位记录自动隐藏；新增真实硕士成员后，硕士栏的 TBD 自动隐藏，其他栏不受影响。
 - 可以继续保留占位文件，也可以在已有真实资料后删除它。
 - `draft: true` 表示先保存但不展示。删除成员前，先检查论文里是否引用了该成员 ID。
-- 导师的研究方向说明 `researchNotes`、教学/服务 `activities` 见 `tbd-faculty.md`。填写真实导师时按相同结构编辑。
+- 导师资料可参考 `src/content/people/ZhaoBinbin.md`。`facultySummary` 是 People 页照片右侧的简介：每个 `- >-` 开始一段，后续文字保持缩进。`interests` 显示研究方向，`role` 显示职务，`photo` 指向照片。修改这些内容不需要改页面代码。文件第二个 `---` 之后的 Markdown 正文用于保留的站内个人资料页，不会自动显示在 People 页；请按需同步更新简介与正文。
+- 如需在站内个人资料页单独展示研究方向说明或教学/服务，可使用 `researchNotes`、`activities`，结构见 `tbd-faculty.md`。这些字段不影响 People 页简介。
 
 全站资料准备好后，再把 `src/config/site.ts` 的 `contentPending` 改为 `false`，移除“内容待维护”提示并允许搜索引擎索引。在此之前保持 true。`sampleContent` 继续保持 false。
 
@@ -333,6 +343,7 @@ project: "https://实际项目页"
 | --- | --- | --- |
 | 找不到图片、`ENOENT` | 引用地址没有对应文件 | 对照第 2 节检查目录、文件名、大小写 |
 | `InvalidContentEntryDataError` | 资料字段格式不符合要求 | 找报错中的文件名，检查日期、year、group、邮箱等字段 |
+| 成员没有显示，但没有报错 | 文件可能不以 `.md` 结尾，因而没有被读取 | 在文件名末尾补上 `.md`，并检查 draft 是否为 false |
 | `missing member` | 论文引用的成员 ID 不存在 | 改为已有成员 ID，或先填 `members: []` |
 | 页面仍显示 TBD | 新资料仍被当作占位或草稿 | 检查 placeholder 和 draft 是否都为 false |
 | 本地有照片，线上没有 | 图片可能没提交或没部署 | 看 git status，再检查 Actions 是否成功 |

@@ -9,8 +9,8 @@ export const site = {
   expansion: 'Robotics · Intelligence · Security · Environment',
   description: 'Security for intelligent agents and embodied AI at Zhejiang University.',
   location: 'Hangzhou, Zhejiang, China',
-  // Leave empty until the lab confirms its real address; no invented recipient.
-  email: '',
+  // Shared recipient for the homepage Send Email button and site contact links.
+  email: 'binbinz@zju.edu.cn',
   // Reject fictional sample entries; explicit TBD placeholders are allowed.
   sampleContent: false,
   // Keep noindex and a pending-content footer until the lab fills real records.
