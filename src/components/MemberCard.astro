@@ -1,0 +1,19 @@
+---
+/**
+ * @file src/components/MemberCard.astro
+ * @purpose Compact photo-first member card, linked to its generated profile.
+ * @maintain All displayed text comes from src/content/people/*.md.
+ */
+import type { CollectionEntry } from 'astro:content';
+import Portrait from './Portrait.astro';
+interface Props { person: CollectionEntry<'people'>; large?: boolean }
+const { person, large = false } = Astro.props;
+const { data } = person;
+---
+<article class:list={['member-card', { 'member-card-faculty': large }]}>
+  <a class="portrait-link" href={`/people/${person.id}/`} aria-label={`View ${data.name}'s profile`}><Portrait name={data.name} photo={data.photo} large={large} /></a>
+  <h3><a href={`/people/${person.id}/`}>{data.name}</a></h3>
+  <p class="member-role">{data.role}</p>
+  <p class="member-interests">{data.group === 'alumni' ? data.affiliation : data.interests}</p>
+  {large && <a class="small-link" href={`/people/${person.id}/`}>Personal homepage</a>}
+</article>

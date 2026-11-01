@@ -1,0 +1,40 @@
+---
+/**
+ * @file src/layouts/BaseLayout.astro
+ * @purpose Shared semantic document, metadata, header, footer and 900px content area.
+ * @maintain Set site identity centrally; keep route-specific content in pages.
+ */
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { site } from '../config/site';
+import '../styles/global.css';
+interface Props { title?: string; description?: string; home?: boolean }
+const { title, description = site.description, home = false } = Astro.props;
+const documentTitle = title ? `${title} | RISE · Zhejiang University` : 'RISE · Zhejiang University';
+const canonical = new URL(Astro.url.pathname, Astro.site);
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{documentTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/png" href="/images/zju-official.png" />
+    <meta name="theme-color" content="#003f88" />
+    <meta property="og:title" content={documentTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    {site.sampleContent && <meta name="robots" content="noindex, nofollow" />}
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="site-shell">
+      <Header />
+      <main id="main" class:list={['page-content', { 'page-home': home }]} tabindex="-1"><slot /></main>
+      <Footer />
+    </div>
+  </body>
+</html>

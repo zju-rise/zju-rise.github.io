@@ -1,0 +1,43 @@
+---
+/**
+ * @file src/pages/index.astro
+ * @purpose Approved editorial homepage: introduction, dense news, blue paper cards.
+ * @maintain News and featured papers are automatic; general text is in config/editorial.ts.
+ */
+import { render } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionBar from '../components/SectionBar.astro';
+import PaperCard from '../components/PaperCard.astro';
+import { getNews, getPapers } from '../lib/content';
+import { contactHref } from '../config/site';
+import { editorial } from '../config/editorial';
+const news = await getNews();
+const renderedNews = await Promise.all(news.map(async (entry) => ({ entry, ...(await render(entry)) })));
+const featured = (await getPapers()).filter((paper) => paper.data.featured);
+const month = (date: string) => new Intl.DateTimeFormat('en', { month: 'long', year: 'numeric', timeZone: 'UTC' }).format(new Date(`${date}T00:00:00Z`));
+---
+<BaseLayout home>
+  <section class="home-intro" aria-labelledby="home-title">
+    <div><h1 id="home-title">RISE at<br />Zhejiang University</h1><p class="home-tagline">Security for intelligent agents<br />and embodied AI.</p></div>
+    <p>{editorial.home.introduction}</p>
+  </section>
+  <section aria-labelledby="news-heading">
+    <SectionBar title="Latest News" id="news-heading" />
+    <div class="news-list">
+      {renderedNews.map(({ entry, Content }) => <article class="news-item" aria-label={entry.data.title}>
+        <time datetime={entry.data.date}>{month(entry.data.date)}</time><div class="news-copy"><Content /></div>
+      </article>)}
+      {!news.length && <p class="empty-message">News from the group will appear here.</p>}
+    </div>
+  </section>
+  <section aria-labelledby="featured-heading">
+    <SectionBar title="Selected Publications" id="featured-heading" href="/publications/" linkLabel="All publications" />
+    <div class="paper-grid">{featured.map((paper) => <PaperCard paper={paper} />)}</div>
+    {!featured.length && <p class="empty-message">Explore the full <a href="/publications/">publication list</a>.</p>}
+  </section>
+  <section class="group-information" aria-label="Group information">
+    <div><h2>From the Group</h2><p>Research Seminar<br />{editorial.home.seminar}</p><p>Reading Group<br />{editorial.home.readingGroup}</p></div>
+    <div><h2>Working Together</h2><p>{editorial.home.together}</p></div>
+    <div id="join"><h2>Join RISE</h2><p>{editorial.home.join}</p><a class="button" href={contactHref()}>Send Email</a></div>
+  </section>
+</BaseLayout>

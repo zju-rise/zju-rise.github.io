@@ -1,0 +1,13 @@
+# @file: .gitignore
+# @purpose: Keep generated output, browser traces and local credentials out of Git.
+# @maintain: Add local tooling here; never ignore src/content or public assets.
+node_modules/
+dist/
+.astro/
+.playwright-cli/
+output/
+.DS_Store
+.env
+.env.*
+!.env.example
+*.tsbuildinfo

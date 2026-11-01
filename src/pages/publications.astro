@@ -1,0 +1,36 @@
+---
+/**
+ * @file src/pages/publications.astro
+ * @purpose Chronological title-first bibliography with client-side combined filters.
+ * @maintain Add a file in content/publications; years and conferences populate themselves.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PaperRow from '../components/PaperRow.astro';
+import { getPapers } from '../lib/content';
+const papers = await getPapers();
+const years = [...new Set(papers.map((paper) => paper.data.year))];
+const conferences = [...new Set(papers.map((paper) => paper.data.venueShort))].sort();
+// Escape '<' inside inline JSON so editorial input cannot terminate the data script.
+const searchIndex = JSON.stringify(papers.map(({ id, data }) => ({ id, title: data.title, authors: data.authors, year: data.year, venue: data.venue, venueShort: data.venueShort }))).replace(/</g, '\\u003c');
+---
+<BaseLayout title="Publications">
+  <h1>Publications</h1>
+  <form class="publication-filters" id="paper-filters" role="search" aria-label="Filter publications">
+    <label class="filter-select">Conference:<select name="conference" aria-label="Conference"><option value="">All conferences</option>{conferences.map((conference) => <option>{conference}</option>)}</select></label>
+    <label class="filter-select">Year:<select name="year" aria-label="Year"><option value="">All years</option>{years.map((year) => <option>{year}</option>)}</select></label>
+    <label class="filter-search"><span class="sr-only">Search publications</span><input type="search" name="q" placeholder="Search publications" aria-label="Search publications" /></label>
+    <button class="sr-only" type="submit">Search</button>
+  </form>
+  <div id="filter-status" class="filter-status" aria-live="polite" hidden></div>
+  <div class="publication-years">
+    {years.map((year) => <section class="publication-year" data-year={year} aria-labelledby={`year-${year}`}><h2 id={`year-${year}`}>{year}</h2><div class="paper-list">{papers.filter((paper) => paper.data.year === year).map((paper) => <PaperRow paper={paper} />)}</div></section>)}
+  </div>
+  <div class="empty-message" id="no-results" hidden><h2>No matching publications</h2><p>Try another year, conference, author, or title.</p><button type="button" class="button" id="reset-filters">Clear filters</button></div>
+  {!papers.length && <p class="empty-message">Publications will appear here as they are added.</p>}
+  <noscript><p>All publications are shown. Enable JavaScript to filter this list.</p></noscript>
+  <script type="application/json" id="paper-index" set:html={searchIndex}></script>
+  <script>
+    import { initializePublicationFilters } from '../scripts/publication-filters';
+    initializePublicationFilters();
+  </script>
+</BaseLayout>

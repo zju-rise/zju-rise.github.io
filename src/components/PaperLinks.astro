@@ -1,0 +1,21 @@
+---
+/**
+ * @file src/components/PaperLinks.astro
+ * @purpose Genuine resource links plus a locally generated BibTeX download.
+ * @maintain Supply pdf/code/project in a paper's frontmatter. Missing links are inert.
+ */
+import type { CollectionEntry } from 'astro:content';
+interface Props { paper: CollectionEntry<'publications'>; compact?: boolean }
+const { paper, compact = false } = Astro.props;
+const links = [
+  { label: compact ? 'Paper' : 'PDF', href: paper.data.pdf },
+  { label: 'Code', href: paper.data.code },
+  { label: 'Project', href: paper.data.project },
+];
+---
+<div class:list={['paper-links', { 'paper-links-compact': compact }]} aria-label={`Resources for ${paper.data.title}`}>
+  {links.map((link) => link.href
+    ? <a href={link.href} target={link.href.startsWith('https:') ? '_blank' : undefined} rel="noopener noreferrer">{compact ? link.label : `[ ${link.label} ]`}</a>
+    : <span class="unavailable-link" title={`${link.label} link has not been provided`} aria-disabled="true">{compact ? link.label : `[ ${link.label} ]`}</span>)}
+  {!compact && <a href={`/bibtex/${paper.id}.bib`} download>[ BibTeX ]</a>}
+</div>

@@ -1,0 +1,15 @@
+---
+/**
+ * @file src/components/Footer.astro
+ * @purpose Shared contact link and honest sample-data disclosure.
+ * @maintain Configure real contact and sample mode in config/site.ts.
+ */
+import { site, contactHref } from '../config/site';
+---
+<footer class="site-footer">
+  <div class="footer-line">
+    <a href="/" class="footer-brand">RISE · Zhejiang University</a>
+    <span>Hangzhou, China <span aria-hidden="true"> | </span> <a href={contactHref()}>Contact</a></span>
+  </div>
+  {site.sampleContent && <p class="sample-disclosure">Design preview — names, news, publications, venues, and biographical details are fictional examples for layout review.</p>}
+</footer>

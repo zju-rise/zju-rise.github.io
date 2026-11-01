@@ -1,0 +1,13 @@
+---
+/**
+ * @file src/components/SectionBar.astro
+ * @purpose Consistent blue heading bars from the approved Figma design.
+ * @maintain Use h2 for page sections and h3 only for subsections.
+ */
+interface Props { title: string; id?: string; href?: string; linkLabel?: string; level?: 'h2' | 'h3' }
+const { title, id, href, linkLabel, level: Tag = 'h2' } = Astro.props;
+---
+<div class="section-bar">
+  <Tag id={id}>{title}</Tag>
+  {href && <a href={href}>{linkLabel}</a>}
+</div>

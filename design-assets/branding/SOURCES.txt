@@ -1,0 +1,10 @@
+# @file: design-assets/branding/SOURCES.txt
+# @purpose: Preserve original design asset provenance and prompts.
+# @maintain: Keep historical attribution; current website assets are documented in docs/assets.md.
+
+Zhejiang University official emblem
+Source page: https://www.zju.edu.cn/572/main.htm
+Image: https://www.zju.edu.cn/_upload/article/images/c3/98/1fb1d281492eb477a098ef7a2901/05966b26-ab45-470d-94c1-99b1e02d12f4.png
+Downloaded: 2026-10-27
+Official blue: RGB 0,63,136 / #003F88
+Color reference: https://www.zju.edu.cn/english/2023/0323/c74903a2732011/page.htm

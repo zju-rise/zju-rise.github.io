@@ -1,0 +1,16 @@
+---
+/**
+ * @file src/components/PaperCard.astro
+ * @purpose Approved pale-blue featured-publication card on the homepage.
+ * @maintain Set featured: true and summary in a publication to include it here.
+ */
+import type { CollectionEntry } from 'astro:content';
+import PaperLinks from './PaperLinks.astro';
+interface Props { paper: CollectionEntry<'publications'> }
+const { paper } = Astro.props;
+---
+<article class="paper-card">
+  <h3><a href={`/publications/#paper-${paper.id}`}>{paper.data.title}</a></h3>
+  <p>{paper.data.summary}</p>
+  <PaperLinks paper={paper} compact />
+</article>

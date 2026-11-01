@@ -1,0 +1,39 @@
+---
+/**
+ * @file src/pages/people/[id].astro
+ * @purpose Generate a real static profile URL for every visible member.
+ * @maintain Biography is Markdown; paper associations use the members field on papers.
+ */
+import { render, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SectionBar from '../../components/SectionBar.astro';
+import Portrait from '../../components/Portrait.astro';
+import PaperRow from '../../components/PaperRow.astro';
+import { getPeople, getPapers } from '../../lib/content';
+import { site } from '../../config/site';
+export async function getStaticPaths() {
+  return (await getPeople()).map((person) => ({ params: { id: person.id }, props: { person } }));
+}
+interface Props { person: CollectionEntry<'people'> }
+const { person } = Astro.props;
+const { Content } = await render(person);
+const papers = (await getPapers()).filter((paper) => paper.data.members.includes(person.id));
+const isFaculty = person.data.group === 'faculty';
+---
+<BaseLayout title={person.data.name} description={`${person.data.name} — ${person.data.interests}. ${person.data.affiliation}.`}>
+  <section class="profile-header" aria-labelledby="profile-name">
+    <Portrait name={person.data.name} photo={person.data.photo} large />
+    <div class="profile-details"><h1 id="profile-name">{person.data.name}</h1><p>{person.data.role}</p><p class="muted">RISE — Robotics, Intelligence, Security, Environment</p><p>Research: {person.data.interests}<br />{person.data.email && <><a href={`mailto:${person.data.email}`}>{person.data.email}</a><br /></>}{site.location}</p>
+      <div class="profile-links">{person.data.scholar && <a href={person.data.scholar}>[ Google Scholar ]</a>}{person.data.cv && <a href={person.data.cv}>[ CV ]</a>}{person.data.website && <a href={person.data.website}>[ Website ]</a>}{person.data.email && <a href={`mailto:${person.data.email}`}>[ Contact ]</a>}</div>
+    </div>
+  </section>
+  <section class="profile-section" aria-labelledby="biography-heading"><SectionBar title="Biography" id="biography-heading" /><div class="prose"><Content /></div></section>
+  {person.data.researchNotes.length > 0 && <section class="profile-section" aria-labelledby="directions-heading"><SectionBar title="Research Directions" id="directions-heading" /><div class="prose">
+    {person.data.researchNotes.map((note) => <><h3><a href={`/research/#${note.direction}`}>{note.title}</a></h3><p>{note.text}</p></>)}
+  </div></section>}
+  {papers.length > 0 && <section class="profile-section" aria-labelledby="profile-papers"><SectionBar title={isFaculty ? 'Selected Publications' : 'Publications'} id="profile-papers" /><div class="paper-list">{papers.slice(0, isFaculty ? 3 : papers.length).map((paper) => <PaperRow paper={paper} />)}</div></section>}
+  {person.data.activities.length > 0 && <section class="profile-section" aria-labelledby="teaching-heading"><SectionBar title="Teaching & Academic Service" id="teaching-heading" /><div class="prose">
+    {person.data.activities.map((activity) => <p>{activity.title}<br /><span class="preserve-lines">{activity.text}</span></p>)}
+  </div></section>}
+  <a class="small-link" href="/people/">Back to all people</a>
+</BaseLayout>

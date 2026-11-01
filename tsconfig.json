@@ -1,0 +1,9 @@
+{
+  "_file": {
+    "purpose": "Strict TypeScript checks for Astro templates and browser scripts.",
+    "maintain": "Keep strict mode enabled; this project uses no path aliases."
+  },
+  "extends": "astro/tsconfigs/strict",
+  "include": [".astro/types.d.ts", "**/*"],
+  "exclude": ["dist", "node_modules"]
+}

@@ -1,0 +1,28 @@
+---
+/**
+ * @file src/pages/research.astro
+ * @purpose Two research directions with their associated papers.
+ * @maintain Edit content/research/*.md; tag papers with the matching direction ID.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionBar from '../components/SectionBar.astro';
+import PaperRow from '../components/PaperRow.astro';
+import { getResearch, getPapers } from '../lib/content';
+import { editorial } from '../config/editorial';
+const directions = await getResearch();
+const papers = await getPapers();
+---
+<BaseLayout title="Research">
+  <h1>Research</h1>
+  <div class="intro-panel"><p>{editorial.research}</p></div>
+  {directions.map((direction) => <section class="research-direction" aria-labelledby={direction.id}>
+    <SectionBar title={direction.data.title} id={direction.id} />
+    <div class="research-columns">
+      <div class="research-copy"><p class="research-overview">{direction.data.overview}</p><h3>Research Topics</h3><ul>{direction.data.topics.map((topic) => <li>{topic}</li>)}</ul></div>
+      <aside class="perspective"><h3>Security across the system</h3><p>{direction.data.pipeline}</p><p>{direction.data.perspective}</p></aside>
+    </div>
+    <h3 class="related-heading">Related Publications</h3>
+    {papers.filter((paper) => paper.data.directions.includes(direction.id as 'agent-security' | 'embodied-ai-security')).slice(0, 1).map((paper) => <PaperRow paper={paper} />)}
+    <a class="small-link" href={`/publications/?q=${encodeURIComponent(direction.data.title === 'Agent Security' ? 'agent' : 'embodied')}`}>Explore related work</a>
+  </section>)}
+</BaseLayout>

@@ -1,0 +1,9 @@
+---
+/**
+ * @file src/pages/404.astro
+ * @purpose Static GitHub Pages fallback for missing URLs.
+ * @maintain Use root-relative links because this page may be served at any depth.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout title="Page not found"><section class="not-found"><h1>Page not found</h1><p>The page may have moved, or the address may be incorrect.</p><a class="button" href="/">Return to RISE</a></section></BaseLayout>

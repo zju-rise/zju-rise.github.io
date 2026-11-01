@@ -1,0 +1,28 @@
+---
+/**
+ * @file src/components/Header.astro
+ * @purpose Shared official ZJU identity and accessible page navigation.
+ * @maintain Edit links in config/site.ts; active state follows the current route.
+ */
+import { site } from '../config/site';
+const pathname = Astro.url.pathname;
+---
+<header class="site-header">
+  <a class="brand" href="/" aria-label="RISE — Zhejiang University home">
+    <span class="university-emblem"><img src="/images/zju-official.png" width="318" height="253" alt="Zhejiang University emblem" fetchpriority="high" /></span>
+    <span class="brand-copy">
+      <strong class="brand-name">{site.name}</strong>
+      <span class="brand-expansion">{site.expansion}</span>
+      <span class="brand-university">{site.university}</span>
+    </span>
+  </a>
+  <div class="header-right">
+    <p class="header-caption">RISE at Zhejiang University</p>
+    <nav aria-label="Main navigation">
+      {site.navigation.map((item) => {
+        const current = item.href === '/' ? pathname === '/' : pathname.startsWith(item.href);
+        return <a href={item.href} aria-current={current ? 'page' : undefined}>{item.label}</a>;
+      })}
+    </nav>
+  </div>
+</header>

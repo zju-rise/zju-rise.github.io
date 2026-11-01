@@ -1,0 +1,12 @@
+# @file: design-assets/illustrations/robot-prompts.txt
+# @purpose: Preserve original design asset provenance and prompts.
+# @maintain: Keep historical attribution; current website assets are documented in docs/assets.md.
+
+Generated using Figma generate_image; model gemini-3.1-flash-lite-image.
+
+agent-safety-robot.jpg
+A single friendly CARTOON ROBOT, NO HUMAN, for a minimalist academic AI agent security website card. Compact full-body robot in three-quarter view, rounded ivory head, two expressive dark eyes in a slate face panel, small jointed arms and legs, one hand thoughtfully interacting with a tiny plain laptop. The robot itself is the sole character. Elegant clean charcoal outlines, restrained premium editorial cartoon illustration, gently rounded forms, warm-white body, light gray mechanical joints, muted champagne accent, soft minimal shading. Match a companion cartoon robotic arm illustration. Centered isolated object filling 75 percent of a square composition with full silhouette visible. Pure flat WHITE #FFFFFF background with NO checkerboard, NO transparency pattern. NO people, human faces, humans, scientist, text, letters, numbers, logos, shields, padlocks, neon, purple, blue glow or UI mockup.
+
+embodied-safety-robotic-arm.jpg
+A single CARTOON INDUSTRIAL ROBOTIC ARM, NO HUMANS and NO humanoid robot, for a minimalist academic embodied AI safety website card. A compact articulated six-axis mechanical manipulator mounted on a small round base, bent in a graceful S-shaped working pose, with visible round joints and a two-finger parallel gripper gently picking up one small champagne-colored cube beside the base. Clearly a mechanical robot ARM, not a person or full-body robot. Elegant clean charcoal outlines, restrained premium editorial cartoon illustration, gently rounded mechanical forms, ivory-white metal housings, light gray joints, slate gripper, tiny muted champagne details, soft minimal shading. Match a companion friendly ivory cartoon robot illustration. Centered isolated object filling 75 percent of a square composition with full arm and base silhouette visible. Pure flat WHITE #FFFFFF background with NO checkerboard or transparency pattern. NO people, human faces, humans, scientist, eyes, smiley faces, text, letters, numbers, logos, shields, padlocks, neon, purple, blue glow or UI mockup.
+
