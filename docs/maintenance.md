@@ -79,7 +79,7 @@ placeholder: false
 name: "Zhi Sijie"
 group: "masters"
 order: 10
-role: "MSc · Joined 2025"
+role: "MS · Joined 2025"
 interests: "Agent Security"
 affiliation: "Zhejiang University"
 photo: "/images/ZhiSijie.jpg"
@@ -116,13 +116,21 @@ TBD
 | --- | --- | --- |
 | 教师 | `faculty` | 按真实职称填写 |
 | 博士生 | `phd` | `PhD · Joined 2026` |
-| 硕士生 | `masters` | `MSc · Joined 2026` |
+| 硕士生 | `masters` | `MS · Joined 2026` |
 | 本科生 | `undergraduate` | `BSc · Class of 2027` |
 | 校友 | `alumni` | 按真实学位、毕业年份填写 |
 
 `group` 决定放在哪一栏，`role` 只是显示文字，系统不会自动把博士文字改成硕士。因此不要写成 `group: masters`、`role: PhD ...`。
 
-`website`、`scholar`、`cv` 也是可选字段。没有真实链接就不写，不能填 `TBD`、`#` 或“真实邮箱”等说明文字代替合法地址。
+`website` 是 People 页姓名、照片及教师“Personal homepage”的跳转地址。请填写本人维护的完整网页 URL，例如下面的格式（必须换成真实地址）：
+
+```yaml
+website: "https://你的个人主页域名/"
+```
+
+没有个人主页时，省略这一行，或写 `website: ""`，页面就不会跳转。不要填写 `TBD` 或 `#`。站内自动生成的个人资料页面仍保留，但 People 页不会再链接过去。
+
+`scholar`、`cv` 也是可选字段，没有真实链接就省略。
 
 ### 第四步：在本地看效果
 
@@ -148,7 +156,7 @@ npm run dev
 
 1. 点击 **People**。
 2. 在 **Master’s Students** 下检查姓名、照片、身份是否正确。
-3. 点击姓名，检查个人主页和正文。
+3. 若填写了 `website`，点击姓名，确认打开本人维护的外部主页；未填写时姓名和照片没有跳转，这是正常行为。
 4. 浏览器缩窄后看照片和文字是否正常。
 
 这时只有你电脑上的预览变了，线上还没有更新。结束预览可在运行命令的终端按 **Control + C**。
@@ -171,7 +179,21 @@ git commit -m "Add member profile and portrait"
 git push origin HEAD:main
 ```
 
-上面最后一条命令将“当前分支最新提交”推送到远程 `main`，适合你目前这份本地工作目录。若提示没有可提交内容，可能这些修改已提交；先看 `git status` 和 `git log -1`，不要反复创建空提交。若提示远程有新修改、无权限或冲突，先停止并把报错发给我，不要使用 `--force`。
+上面最后一条命令将“当前分支最新提交”推送到远程 `main`，适合你目前的 `codex/implement-lab-site` 分支。
+
+**当前这个分支没有设置上游，不能只写 `git push` 来发布。** 一次完整更新应按顺序执行：
+
+```sh
+npm run verify
+git status
+git add 你实际修改的文件路径
+git commit -m "Describe this update"
+git push origin HEAD:main
+```
+
+`git add 你实际修改的文件路径` 是说明用的占位命令，执行时必须替换成真实路径，如本节上面的成员文件和照片。推送当前开发分支本身不会发布；只有更新远程 main，且 Actions 检查成功，才会自动部署。不需要重新设置 Pages，也不需要手工上传 dist。
+
+如果以后选择在本地 main 分支维护，并且 main 正确跟踪 origin/main，那么提交后可直接用 `git push`。多人维护仍优先走合并请求。若提示没有可提交内容，可能这些修改已提交；先看 `git status` 和 `git log -1`，不要反复创建空提交。若提示远程有新修改、无权限或冲突，先停止并把报错发给我，不要使用 `--force`。
 
 这次如果已由 Codex 修复并发布，就不用再照抄上面命令重复提交。下次换成自己实际修改的文件名即可。
 

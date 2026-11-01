@@ -139,6 +139,7 @@
   .portrait-large span { font-size: 48px; color: rgb(0 63 136 / 28%); }
   .member-card h3 { font-size: 14px; }
   .member-card h3 a { text-decoration: underline; }
+  .member-card h3 > span { color: var(--blue); }
   .member-role, .member-interests { font-size: 12px; }
   .member-interests { color: var(--muted); }
   .member-card-faculty h3 { font-size: 15px; }
