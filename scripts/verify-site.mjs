@@ -5,13 +5,14 @@
  */
 import { readdir, readFile, stat } from 'node:fs/promises';
 import path from 'node:path';
-import assert from 'node:assert/strict';
 
 async function walk(dir) {
   const entries = await readdir(dir, { withFileTypes: true });
   return (await Promise.all(entries.map((entry) => entry.isDirectory() ? walk(path.join(dir, entry.name)) : path.join(dir, entry.name)))).flat();
 }
 const files = await walk('dist');
+const exactFilePaths = new Set(files);
+const publicFiles = await walk('public');
 const htmlFiles = files.filter((file) => file.endsWith('.html'));
 const errors = [];
 const assetTargets = new Set();
@@ -31,13 +32,27 @@ for (const file of htmlFiles) {
     let target = path.join('dist', decodeURIComponent(url.pathname));
     try {
       if ((await stat(target)).isDirectory()) target = path.join(target, 'index.html');
-      assert.ok((await stat(target)).size > 0, 'empty asset');
+      // macOS may resolve wrong-case paths; GitHub Pages runs on case-sensitive Linux.
+      if (!exactFilePaths.has(target)) throw new Error('file path capitalization does not match');
+      if ((await stat(target)).size === 0) throw new Error('empty asset');
       assetTargets.add(target);
       if (url.hash && target.endsWith('.html')) {
         const targetHtml = await readFile(target, 'utf8');
         if (!targetHtml.includes(`id="${decodeURIComponent(url.hash.slice(1))}"`)) throw new Error('missing anchor');
       }
-    } catch (error) { errors.push(`${file}: broken local reference ${raw} (${error.message})`); }
+    } catch (error) {
+      if (/^\/(images|files)\//.test(url.pathname)) {
+        // Point editors to source assets, not dist (which is regenerated each build).
+        const expected = `public${decodeURIComponent(url.pathname)}`;
+        const alternatives = publicFiles.filter((candidate) => path.basename(candidate).toLowerCase() === path.basename(expected).toLowerCase());
+        const hint = alternatives.length
+          ? `\n  发现同名文件：${alternatives.join('、')}。如果使用这个文件，请把资料中的路径改成 ${alternatives[0].replace(/^public/, '')}。`
+          : '\n  请把文件放到上面的位置，或修正资料中的 photo/下载链接。文件名和大小写必须一致。';
+        errors.push(`${file}\n  找不到资源：${raw}\n  代码中应有文件：${expected}${hint}`);
+      } else {
+        errors.push(`${file}: broken local reference ${raw} (${error.message})`);
+      }
+    }
   }
 }
 for (const required of ['index.html', 'research/index.html', 'publications/index.html', 'people/index.html', '404.html']) {
@@ -53,5 +68,8 @@ for (const file of sources) {
     errors.push(`${file}: missing file self-description`);
   }
 }
-assert.equal(errors.length, 0, `Site verification failed:\n${errors.join('\n')}`);
+if (errors.length) {
+  console.error(`网站检查未通过，共 ${errors.length} 项：\n\n${errors.join('\n\n')}\n\n请修改源文件后重新运行 npm run verify；不要修改 dist/。\n维护步骤：docs/maintenance.md`);
+  process.exit(1);
+}
 console.log(`Verified ${htmlFiles.length} HTML routes, ${assetTargets.size} local link/asset targets and ${sources.length} source headers.`);
