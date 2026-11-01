@@ -41,6 +41,8 @@ photo: "/images/ZhiSijie.jpg"
 
 记住这条对应关系：**网站地址不写 public，硬盘位置要写 public。**
 
+因此 `/public/images/ZhiSijie.jpg` 也不正确；不是把 public 补进地址，而是从硬盘位置中去掉 public。
+
 | 文件在电脑里的位置 | `.md` 里应写的地址 |
 | --- | --- |
 | `public/images/ZhiSijie.jpg` | `/images/ZhiSijie.jpg` |
@@ -63,7 +65,7 @@ photo: "/images/ZhiSijie.jpg"
 
 打开 `src/content/people/`，新建一个 `.md` 文件。新文件建议使用小写英文和短横线，例如 `zhi-sijie.md`。
 
-你现有的 `Zhi-Sijie.md` 也能读取，生成的个人主页是 `/people/zhi-sijie/`。发布后尽量不要改文件名，避免改变个人主页地址或论文关联。
+你现有的 `ZhiSijie.md` 也能读取，生成的个人主页是 `/people/zhisijie/`。发布后尽量不要改文件名，避免改变个人主页地址或论文关联。
 
 下面是与你本次资料对应的完整内容：
 
@@ -77,7 +79,7 @@ placeholder: false
 name: "Zhi Sijie"
 group: "masters"
 order: 10
-role: "MSc · Joined 2026"
+role: "MSc · Joined 2025"
 interests: "Agent Security"
 affiliation: "Zhejiang University"
 photo: "/images/ZhiSijie.jpg"
@@ -164,7 +166,7 @@ git status
 以这次成员为例，只提交相关文件：
 
 ```sh
-git add public/images/ZhiSijie.jpg src/content/people/Zhi-Sijie.md
+git add public/images/ZhiSijie.jpg src/content/people/ZhiSijie.md
 git commit -m "Add member profile and portrait"
 git push origin HEAD:main
 ```
@@ -246,7 +248,7 @@ summary: "A short English description for the homepage card."
 directions:
   - "agent-security"
 members:
-  - "zhi-sijie"
+  - "zhisijie"
 ---
 ```
 
@@ -264,7 +266,7 @@ members:
 | `directions` | `agent-security` 或 `embodied-ai-security`，可以同时填两个 |
 | `members` | 本实验室作者的资料 ID；不是显示姓名，不含 `.md` |
 
-成员 ID 可从个人主页地址确认：`/people/zhi-sijie/` 对应 `zhi-sijie`。今后成员文件统一用小写文件名，则文件名去掉 `.md` 就是 ID。还没添加成员资料时，可以先用 `members: []`；不要引用一个不存在的成员。
+成员 ID 可从个人主页地址确认：`/people/zhisijie/` 对应 `zhisijie`。今后成员文件统一用小写文件名，则文件名去掉 `.md` 就是 ID。还没添加成员资料时，可以先用 `members: []`；不要引用一个不存在的成员。
 
 如果有 PDF、代码或项目页，在第二个 `---` **之前**增加需要的字段：
 

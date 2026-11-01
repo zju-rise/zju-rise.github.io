@@ -7,7 +7,7 @@ placeholder: false
 name: "Zhi Sijie"
 group: "masters"
 order: 10
-role: "MS · Joined 2026"
+role: "MSc · Joined 2025"
 interests: "Agent Security"
 affiliation: "Zhejiang University"
 photo: "/images/ZhiSijie.jpg"
