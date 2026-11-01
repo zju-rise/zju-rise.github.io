@@ -23,16 +23,13 @@
 
 成员在开发分支编辑 → 创建 PR → 等待 verify 通过 → 合并 main → 自动部署。建议组织长期维护者有两个 Owner，其他成员使用各自账号，不共享密码。可为 main 启用 PR 审核及 verify 检查要求。
 
-当前开发分支为 `codex/implement-lab-site`。空仓库首次发布可执行：
+日常编辑、同步、提交和发布的完整步骤见[维护手册](maintenance.md#9-本地维护)。有直接写入 main 权限时，已提交的当前分支可通过以下命令发布：
 
 ```sh
-# 先确认 git status 和内容，避免提交个人文件。
-git add .
-git commit -m "Build RISE static laboratory website"
-git push -u origin HEAD:main
+git push origin HEAD:main
 ```
 
-首次推送到 main 后，本地可以 `git fetch origin`，再 `git switch -c main --track origin/main`。后续使用新的 `codex/...` 或维护分支，不要强制推送覆盖其他人的修改。
+执行前先同步远程 main、确认当前分支的所有待推送提交都属于要发布的内容，并完成验证。该命令不会将本地分支改名。若 main 要求 PR 审核，则推送维护分支并创建 PR，不要强制推送覆盖其他人的修改。
 
 ## 检查内容
 

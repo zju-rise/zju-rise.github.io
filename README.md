@@ -9,7 +9,7 @@
 
 - 网站地址：<https://zju-rise.github.io/>
 - 设计稿：<https://www.figma.com/design/aQPsLNTIrVbdtso7ReBbHy?node-id=57-199>
-- 日常维护：[维护指南](docs/maintenance.md)
+- 日常维护：[完整维护手册](docs/maintenance.md)（内容、界面元素、GitHub 在线编辑、本地维护和发布排错）
 - 部署及交接：[部署指南](docs/deployment.md)
 
 ## 本地运行
@@ -58,9 +58,9 @@ scripts/              构建产物及手写文件说明检查
 
 ## 内容状态
 
-当前是 **TBD 待维护状态**：所有虚构人物、新闻、论文、会议和导师经历均已删除。保留明确的 TBD 占位记录，使用 `placeholder: true` 标识；真实资料填写后改为 false。占位论文不生成 BibTeX、不进入搜索，新增真实内容后同栏目的占位条目自动隐藏。
+真实资料与 TBD 占位记录可以并存；占位记录使用 `placeholder: true` 标识，录入真实资料后改为 false。占位论文不生成 BibTeX、不进入搜索，新增真实内容后同栏目的占位条目自动隐藏。成员按分组隐藏占位记录。
 
-收件邮箱尚未填写，Send Email 只打开带主题和正文模板的空收件人草稿，**不会自动发送邮件**。上线前在 `src/config/site.ts` 填写 `email`。
+Send Email 和页脚 Contact 的收件邮箱统一在 `src/config/site.ts` 的 `email` 中维护，目前为 `binbinz@zju.edu.cn`。点击只会打开邮件客户端的草稿，**不会自动发送邮件**。
 
 `sampleContent: false` 已启用，构建拒绝虚构样例。资料完善后设置 `contentPending: false`，移除待维护说明并允许搜索引擎索引；在此之前保持 true。
 
