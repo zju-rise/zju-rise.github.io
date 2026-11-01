@@ -5,7 +5,7 @@
  */
 export const editorial = {
   home: {
-    introduction: 'TBD',
+    introduction: 'RISE is a research group at Zhejiang University working at the intersection of Robotics, Intelligence, Security, and Environment. We study how intelligent agents and embodied AI systems can operate securely in open, changing environments, with a focus on understanding emerging threats and building practical defenses.',
     seminar: 'Security of autonomous AI systems',
     readingGroup: 'Agents, robots, and trustworthy intelligence',
     together: 'We exchange early ideas through weekly discussions, paper reading, and collaborative projects. Students from different backgrounds are welcome to explore research with the group.',
