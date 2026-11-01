@@ -11,7 +11,7 @@
 
 ## 添加新闻
 
-复制 `src/content/news/` 内一个文件，命名如 `2026-11-01-paper-accepted.md`。`date` 决定从新到旧的排序，同一天多条新闻使用不同文件名即可。
+复制 `src/content/news/tbd.md`，命名如 `2026-11-01-paper-accepted.md`。`date` 决定从新到旧的排序，同一天多条新闻使用不同文件名即可。
 
 ```yaml
 ---
@@ -19,6 +19,7 @@ purpose: "RISE publication news."
 maintain: "Edit the date and Markdown body."
 sample: false
 draft: false
+placeholder: false
 date: "2026-11-01"
 title: "Congratulations on the new paper"
 ---
@@ -39,6 +40,7 @@ purpose: "A publication record reused across the site."
 maintain: "Update bibliographic fields and resource links here."
 sample: false
 draft: false
+placeholder: false
 title: "Your Actual Paper Title"
 authors:
   - "First Author"
@@ -80,6 +82,7 @@ purpose: "Member profile and team directory entry."
 maintain: "Edit role, portrait and biography when the member's status changes."
 sample: false
 draft: false
+placeholder: false
 name: "Actual Name"
 group: "phd"
 order: 10
@@ -99,7 +102,7 @@ and academic background using verified information.
 - `email`、`website`、`scholar`、`cv` 都是可选字段。没有地址就省略，不会生成死链接。
 - 正文为个人主页 Biography，支持多段 Markdown。
 - 毕业后保留文件 ID，修改 `group: alumni`、`role` 和 `affiliation`，论文关联不变。
-- 导师额外的 `researchNotes` 和 `activities` 见 `alex-chen.md`。这些内容也在资料文件中维护，不在页面模板里。
+- 导师额外的 `researchNotes` 和 `activities` 见 `tbd-faculty.md`。这些内容也在资料文件中维护，不在页面模板里。
 - 新增导师会自动出现在 Faculty 区并生成个人主页；不需要改路由代码。
 
 ## 修改研究方向与公共文字
@@ -113,7 +116,11 @@ and academic background using verified information.
 
 `draft: true` 会隐藏记录，并排除其关联用途。删成员前先清理其论文的 `members` 引用。`sample: true` 表示虚构设计示例，替换成经过确认的真实资料后再改为 false。
 
-正式上线前：替换或删除全部样例 → 填真实邮箱 → 设置 `sampleContent: false` → 运行 `npm run verify`。此时任何剩余的公开样例会阻止构建；页脚说明和 noindex 标签在验证完成后随配置一起移除。
+当前数据已清空为 TBD。`placeholder: true` 允许新闻日期和论文年份写 `TBD`，但不会将占位论文当作真实论文搜索或导出引用。填写真实记录时，请补齐日期/年份等字段并设 `placeholder: false`。
+
+添加真实新闻或论文后，该栏目中剩余的占位记录会自动隐藏；成员则按各自分组隐藏占位记录。也可直接删除占位文件。导师占位资料在 `tbd-faculty.md`，其余成员分组各保留一份占位文件。
+
+正式资料完善后：删除未使用的占位记录 → 填真实邮箱 → 保持 `sampleContent: false` → 设置 `contentPending: false` → 运行 `npm run verify`。待维护说明和 noindex 标签会随 contentPending 关闭而移除。
 
 修改内容后本地执行：
 

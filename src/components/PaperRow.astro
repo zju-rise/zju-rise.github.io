@@ -10,8 +10,8 @@ interface Props { paper: CollectionEntry<'publications'> }
 const { paper } = Astro.props;
 const { data } = paper;
 ---
-<article id={`paper-${paper.id}`} class="paper-row" data-paper-id={paper.id}>
+<article id={`paper-${paper.id}`} class="paper-row" data-paper-id={paper.data.placeholder ? undefined : paper.id}>
   <h3>{data.pdf ? <a href={data.pdf}>{data.title}</a> : data.title}</h3>
   <p class="paper-authors">{data.authors.length > 1 ? `${data.authors.slice(0, -1).join(', ')}, and ${data.authors.at(-1)}` : data.authors[0]}</p>
-  <div class="paper-meta"><p>{data.venue} · {data.year}</p><PaperLinks paper={paper} /></div>
+  <div class="paper-meta"><p>{data.placeholder ? 'TBD' : `${data.venue} · ${data.year}`}</p><PaperLinks paper={paper} /></div>
 </article>

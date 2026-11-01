@@ -15,7 +15,7 @@ const news = await getNews();
 const renderedNews = await Promise.all(news.map(async (entry) => ({ entry, ...(await render(entry)) })));
 const featured = (await getPapers()).filter((paper) => paper.data.featured);
 // Use the record's full calendar date; UTC avoids a day shifting across timezones.
-const newsDate = (date: string) => new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' }).format(new Date(`${date}T00:00:00Z`));
+const newsDate = (date: string) => date === 'TBD' ? 'TBD' : new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' }).format(new Date(`${date}T00:00:00Z`));
 ---
 <BaseLayout home>
   <section class="home-intro" aria-labelledby="home-title">
@@ -26,7 +26,7 @@ const newsDate = (date: string) => new Intl.DateTimeFormat('en-US', { month: 'sh
     <SectionBar title="Latest News" id="news-heading" />
     <div class="news-list">
       {renderedNews.map(({ entry, Content }) => <article class="news-item" aria-label={entry.data.title}>
-        <time datetime={entry.data.date}>{newsDate(entry.data.date)}</time><div class="news-copy"><Content /></div>
+        <time datetime={entry.data.placeholder ? undefined : entry.data.date}>{newsDate(entry.data.date)}</time><div class="news-copy"><Content /></div>
       </article>)}
       {!news.length && <p class="empty-message">News from the group will appear here.</p>}
     </div>

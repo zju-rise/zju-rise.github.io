@@ -13,14 +13,23 @@ function visible<T extends { data: { draft: boolean; sample: boolean } }>(entrie
   }
   return published;
 }
-export const getNews = async () => visible(await getCollection('news')).sort((a, b) => b.data.date.localeCompare(a.data.date));
-export const getPeople = async () => visible(await getCollection('people')).sort((a, b) => a.data.order - b.data.order || a.data.name.localeCompare(b.data.name));
+// Once genuine content exists, its temporary placeholders disappear automatically.
+function preferReal<T extends { data: { placeholder: boolean } }>(entries: T[]): T[] {
+  return entries.some((entry) => !entry.data.placeholder) ? entries.filter((entry) => !entry.data.placeholder) : entries;
+}
+export const getNews = async () => preferReal(visible(await getCollection('news'))).sort((a, b) => b.data.date.localeCompare(a.data.date));
+export const getPeople = async () => {
+  const people = visible(await getCollection('people'));
+  return people.filter((person) => !person.data.placeholder || !people.some((other) => other.data.group === person.data.group && !other.data.placeholder))
+    .sort((a, b) => a.data.order - b.data.order || a.data.name.localeCompare(b.data.name));
+};
 export const getResearch = async () => visible(await getCollection('research')).sort((a, b) => a.data.order - b.data.order);
 export async function getPapers(): Promise<CollectionEntry<'publications'>[]> {
-  const papers = visible(await getCollection('publications'));
+  const papers = preferReal(visible(await getCollection('publications')));
   const people = new Set((await getPeople()).map((p) => p.id));
   const directions = new Set((await getResearch()).map((r) => r.id));
   for (const paper of papers) {
+    if (paper.data.placeholder) continue;
     for (const member of paper.data.members) {
       if (!people.has(member)) throw new Error(`Publication ${paper.id}: missing member ${member}`);
     }
@@ -28,7 +37,7 @@ export async function getPapers(): Promise<CollectionEntry<'publications'>[]> {
       if (!directions.has(direction)) throw new Error(`Publication ${paper.id}: missing direction ${direction}`);
     }
   }
-  return papers.sort((a, b) => b.data.year - a.data.year || a.data.order - b.data.order || a.id.localeCompare(b.id));
+  return papers.sort((a, b) => Number(b.data.year === 'TBD' ? 0 : b.data.year) - Number(a.data.year === 'TBD' ? 0 : a.data.year) || a.data.order - b.data.order || a.id.localeCompare(b.id));
 }
 export const groupLabels = {
   faculty: 'Faculty', phd: 'PhD Students', masters: 'Master’s Students',

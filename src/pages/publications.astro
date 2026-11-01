@@ -8,17 +8,18 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import PaperRow from '../components/PaperRow.astro';
 import { getPapers } from '../lib/content';
 const papers = await getPapers();
+const actualPapers = papers.filter((paper) => !paper.data.placeholder);
 const years = [...new Set(papers.map((paper) => paper.data.year))];
-const conferences = [...new Set(papers.map((paper) => paper.data.venueShort))].sort();
+const conferences = [...new Set(actualPapers.map((paper) => paper.data.venueShort))].sort();
 // Escape '<' inside inline JSON so editorial input cannot terminate the data script.
-const searchIndex = JSON.stringify(papers.map(({ id, data }) => ({ id, title: data.title, authors: data.authors, year: data.year, venue: data.venue, venueShort: data.venueShort }))).replace(/</g, '\\u003c');
+const searchIndex = JSON.stringify(actualPapers.map(({ id, data }) => ({ id, title: data.title, authors: data.authors, year: data.year, venue: data.venue, venueShort: data.venueShort }))).replace(/</g, '\\u003c');
 ---
 <BaseLayout title="Publications">
   <h1>Publications</h1>
   <form class="publication-filters" id="paper-filters" role="search" aria-label="Filter publications">
-    <label class="filter-select">Conference:<select name="conference" aria-label="Conference"><option value="">All conferences</option>{conferences.map((conference) => <option>{conference}</option>)}</select></label>
-    <label class="filter-select">Year:<select name="year" aria-label="Year"><option value="">All years</option>{years.map((year) => <option>{year}</option>)}</select></label>
-    <label class="filter-search"><span class="sr-only">Search publications</span><input type="search" name="q" placeholder="Search publications" aria-label="Search publications" /></label>
+    <label class="filter-select">Conference:<select name="conference" aria-label="Conference" disabled={!actualPapers.length}><option value="">{actualPapers.length ? 'All conferences' : 'TBD'}</option>{conferences.map((conference) => <option>{conference}</option>)}</select></label>
+    <label class="filter-select">Year:<select name="year" aria-label="Year" disabled={!actualPapers.length}><option value="">{actualPapers.length ? 'All years' : 'TBD'}</option>{years.filter((year) => year !== 'TBD').map((year) => <option>{year}</option>)}</select></label>
+    <label class="filter-search"><span class="sr-only">Search publications</span><input type="search" name="q" placeholder="Search publications" aria-label="Search publications" disabled={!actualPapers.length} /></label>
     <button class="sr-only" type="submit">Search</button>
   </form>
   <div id="filter-status" class="filter-status" aria-live="polite" hidden></div>

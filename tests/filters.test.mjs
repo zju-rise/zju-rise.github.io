@@ -31,3 +31,6 @@ test('BibTeX escapes special characters and separates authors correctly', () => 
   assert.ok(bib.includes('René Chen and Rui Zhang'));
   assert.ok(bib.includes('year = {2026}'));
 });
+test('TBD publications cannot be exported as bibliographic claims', () => {
+  assert.throws(() => toBibtex('tbd', { ...paper, year: 'TBD' }), /placeholder publication/);
+});

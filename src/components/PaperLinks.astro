@@ -17,5 +17,5 @@ const links = [
   {links.map((link) => link.href
     ? <a href={link.href} target={link.href.startsWith('https:') ? '_blank' : undefined} rel="noopener noreferrer">{compact ? link.label : `[ ${link.label} ]`}</a>
     : <span class="unavailable-link" title={`${link.label} link has not been provided`} aria-disabled="true">{compact ? link.label : `[ ${link.label} ]`}</span>)}
-  {!compact && <a href={`/bibtex/${paper.id}.bib`} download>[ BibTeX ]</a>}
+  {!compact && (paper.data.placeholder ? <span class="unavailable-link" aria-disabled="true">[ BibTeX ]</span> : <a href={`/bibtex/${paper.id}.bib`} download>[ BibTeX ]</a>)}
 </div>

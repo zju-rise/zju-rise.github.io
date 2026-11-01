@@ -12,4 +12,5 @@ import { site, contactHref } from '../config/site';
     <span>Hangzhou, China <span aria-hidden="true"> | </span> <a href={contactHref()}>Contact</a></span>
   </div>
   {site.sampleContent && <p class="sample-disclosure">Design preview — names, news, publications, venues, and biographical details are fictional examples for layout review.</p>}
+  {site.contentPending && <p class="sample-disclosure">Content pending — entries marked TBD will be updated by the RISE team.</p>}
 </footer>

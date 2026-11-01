@@ -11,9 +11,10 @@ export const site = {
   location: 'Hangzhou, Zhejiang, China',
   // Leave empty until the lab confirms its real address; no invented recipient.
   email: '',
-  // Sample people, achievements and venues are fictional design-review content.
-  // Changing this to false also enables a build-time gate against sample entries.
-  sampleContent: true,
+  // Reject fictional sample entries; explicit TBD placeholders are allowed.
+  sampleContent: false,
+  // Keep noindex and a pending-content footer until the lab fills real records.
+  contentPending: true,
   navigation: [
     { label: 'Home', href: '/' },
     { label: 'Research', href: '/research/' },

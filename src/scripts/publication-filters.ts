@@ -10,6 +10,8 @@ export function initializePublicationFilters() {
   const index = document.querySelector('#paper-index');
   if (!form || !index) return;
   const papers: (SearchablePaper & { id: string })[] = JSON.parse(index.textContent || '[]');
+  // TBD rows are layout placeholders, not searchable publications or citations.
+  if (!papers.length) return;
   const query = form.querySelector<HTMLInputElement>('[name="q"]')!;
   const year = form.querySelector<HTMLSelectElement>('[name="year"]')!;
   const conference = form.querySelector<HTMLSelectElement>('[name="conference"]')!;

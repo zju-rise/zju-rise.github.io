@@ -6,7 +6,7 @@
 export interface SearchablePaper {
   title: string;
   authors: string[];
-  year: number;
+  year: number | 'TBD';
   venue: string;
   venueShort: string;
 }
@@ -22,6 +22,7 @@ export function matchesPaper(paper: SearchablePaper, filters: PaperFilters): boo
 }
 
 export function toBibtex(id: string, paper: SearchablePaper): string {
+  if (paper.year === 'TBD') throw new Error('Cannot generate a citation for a placeholder publication.');
   // Escape BibTeX punctuation rather than allowing author-entered text to break it.
   const escape = (s: string) => s.replace(/[\\{}%&#_$]/g, (c) => c === '\\' ? '\\textbackslash{}' : `\\${c}`);
   return `@inproceedings{${id.replace(/[^a-zA-Z0-9_-]/g, '-')},\n  title = {${escape(paper.title)}},\n  author = {${paper.authors.map(escape).join(' and ')}},\n  booktitle = {${escape(paper.venue)}},\n  year = {${paper.year}}\n}`;

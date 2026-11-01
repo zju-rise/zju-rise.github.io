@@ -6,7 +6,7 @@
  */
 interface Props { name: string; photo?: string; large?: boolean }
 const { name, photo, large = false } = Astro.props;
-const initials = name.replace(/^Dr\.\s*/, '').split(/\s+/).map((word) => word[0]).slice(0, 2).join('');
+const initials = name === 'TBD' ? 'TBD' : name.replace(/^Dr\.\s*/, '').split(/\s+/).map((word) => word[0]).slice(0, 2).join('');
 ---
 <div class:list={['portrait', { 'portrait-large': large }]}>
   {photo ? <img src={photo} alt={`Portrait of ${name}`} width="376" height="430" loading="lazy" /> : <span aria-label={`Portrait of ${name} not yet provided`} role="img">{initials}</span>}

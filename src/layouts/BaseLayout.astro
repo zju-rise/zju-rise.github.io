@@ -27,7 +27,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonical} />
-    {site.sampleContent && <meta name="robots" content="noindex, nofollow" />}
+    {(site.sampleContent || site.contentPending) && <meta name="robots" content="noindex, nofollow" />}
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
